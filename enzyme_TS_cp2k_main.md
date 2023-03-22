@@ -9,7 +9,7 @@
 Department of Chemistry and Biochemistry, Faculty of Sciences, University of Porto
 
 <div align="center">
-    <img src="TUT.png">
+    <img src="cover.png">
 </div>
 
 ---
