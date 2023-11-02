@@ -1,4 +1,4 @@
-<h3> <p align="center"> <b>I - Geometry optimization of the reactant</b> </p></h3>
+<h2> <p align="center"> <b>I - Geometry optimization of the reactant</b> </p></h2>
 
 <br/>
 
@@ -12,7 +12,7 @@
 
 <br/>
 
-<h2> <p align="center"><b> MM geometry optimization </b></p> </h2>
+<h3> <p align="center"><b> MM geometry optimization </b></p> </h3>
 
 <br/>
 
@@ -209,7 +209,7 @@ After, we define the parameters relative to the geometry optimization process in
 
 <br/>
 
-<h2><p align="center"> <b> QM/MM geometry optimization - mechanical embedding </b></p></h2>
+<h3><p align="center"> <b> QM/MM geometry optimization - mechanical embedding </b></p></h3>
 
 <br/>
  
@@ -362,7 +362,7 @@ In the next geometry optimization, the QM method is introduced:
 
 <br/>
 
-<h2><p align="center"> <b>QM/MM geometry optimization - electrostatic embedding</b> </p></h2>
+<h3><p align="center"> <b>QM/MM geometry optimization - electrostatic embedding</b> </p></h3>
 
 <br/>
  
