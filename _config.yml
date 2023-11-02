@@ -1,6 +1,0 @@
-title: Tutorial for Transition State (TS) searches of Enzymatic Reaction Mechanisms using QM/MM methods in CP2K
-show_downloads: true
-google_analytics:
-remote_theme: pages-themes/cayman@v0.2.0
-plugins:
-- jekyll-remote-theme
