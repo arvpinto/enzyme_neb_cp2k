@@ -1,5 +1,5 @@
 <br>
-<h2><p align="center"> **III - Minimum energy path using the NEB method** </p></h2>
+<h2><p align="center"> III - Minimum energy path using the NEB method </p></h2>
 
 <br/>
  
