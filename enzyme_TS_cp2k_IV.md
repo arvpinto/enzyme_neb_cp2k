@@ -1,5 +1,5 @@
 <br>
-<h2><p align="center"> IV - Vibrational analysis of a TS guess </p></h2>
+<h2><p align="center"><b>IV - Vibrational analysis of a TS guess </b></p></h2>
 
 <br/>
 
