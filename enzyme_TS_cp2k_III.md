@@ -1,9 +1,5 @@
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
-
-
----
-
-### <p align="center"> **III - Minimum energy path using the NEB method** </p>
+<br>
+<h2><p align="center"> **III - Minimum energy path using the NEB method** </p></h2>
 
 <br/>
  
@@ -195,9 +191,3 @@ CI_NEB-BAND32.out 	 3215 	-1101.545169619122589 	-269.44218411988498 	-832.10298
 </div>
  
  <br/>
-
----
-
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
-
-
