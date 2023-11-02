@@ -1,10 +1,5 @@
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
-
-
----
-
- 
-### <p align="center"> **V - TS optimization with the Dimer method** </p>
+<br>
+<h2><p align="center"> V - TS optimization with the Dimer method </p></h2>
 
 <br/>
 
@@ -107,11 +102,4 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
 <br/>
 
 - <p align="justify">After getting an optimized TS structure, we recommend doing a geometry optimization of the minima corresponding to reactant and product, as well as a vibrational analysis to check if there aren't any imaginary frequencies in the minima, and a single imaginary frequency in your saddle point. We also suggest to further re-optimize these final structures with a higher level of theory, such as DFT with the PBE or B3LYP functional, to refine your results.</p>
-
-
- 
----
-
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
-
 
