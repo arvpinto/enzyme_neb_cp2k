@@ -1,8 +1,4 @@
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
-
----
-
-### <p align="center"> **I - Geometry optimization of the reactant** </p>
+<p align="center"> <h3><b>I - Geometry optimization of the reactant</b></h3> </p>
 
 <br/>
 
@@ -16,7 +12,7 @@
 
 <br/>
 
-#### **<p align="center"> MM geometry optimization </p>**
+#### <p align="center"><b> MM geometry optimization </b></p>
 
 <br/>
 
@@ -213,7 +209,7 @@ After, we define the parameters relative to the geometry optimization process in
 
 <br/>
 
-#### **<p align="center"> QM/MM geometry optimization - mechanical embedding </p>**
+<p align="center"> <b> QM/MM geometry optimization - mechanical embedding </b></p>
 
 <br/>
  
@@ -389,7 +385,3 @@ In the last geometry optimization, the QM/MM boundary has been changed to electr
 ```
 
 <br/>
-
----
-
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
