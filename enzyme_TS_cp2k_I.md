@@ -1,4 +1,4 @@
-<p align="center"> <h3><b>I - Geometry optimization of the reactant</b></h3> </p>
+<h3> <p align="center"> <b>I - Geometry optimization of the reactant</b> </p></h3>
 
 <br/>
 
