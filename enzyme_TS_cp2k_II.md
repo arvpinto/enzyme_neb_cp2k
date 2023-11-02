@@ -1,4 +1,5 @@
- <h3><p align="center"> <b> II - Potential energy surface scan to explore a trial reaction coordinate</b> </p> </h3>
+<br>
+<h2><p align="center"> <b> II - Potential energy surface scan to explore a trial reaction coordinate</b> </p> </h2>
 
 <br/>
 
