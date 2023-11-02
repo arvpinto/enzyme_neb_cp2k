@@ -12,7 +12,7 @@
 
 <br/>
 
-#### <p align="center"><b> MM geometry optimization </b></p>
+<h2> <p align="center"><b> MM geometry optimization </b></p> </h2>
 
 <br/>
 
@@ -209,7 +209,7 @@ After, we define the parameters relative to the geometry optimization process in
 
 <br/>
 
-<p align="center"> <b> QM/MM geometry optimization - mechanical embedding </b></p>
+<h2><p align="center"> <b> QM/MM geometry optimization - mechanical embedding </b></p></h2>
 
 <br/>
  
@@ -362,7 +362,7 @@ In the next geometry optimization, the QM method is introduced:
 
 <br/>
 
-#### **<p align="center"> QM/MM geometry optimization - electrostatic embedding </p>**
+<h2><p align="center"> <b>QM/MM geometry optimization - electrostatic embedding</b> </p></h2>
 
 <br/>
  
