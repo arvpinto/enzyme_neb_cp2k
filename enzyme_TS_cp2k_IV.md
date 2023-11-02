@@ -1,9 +1,4 @@
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
-
----
-
-
-### <p align="center"> **IV - Vibrational analysis of a TS guess** </p>
+<h2><p align="center"> IV - Vibrational analysis of a TS guess </p></h2>
 
 <br/>
 
@@ -73,10 +68,5 @@ Representation: Dynamicbonds with a cutoff of 3.0 for bonds and VDW for atoms.
 <br/>
 
 - <p align="justify">We extract from the *mol file the vector associated with the displacement of coordinates of the imaginary frequency and save it to a dimer_vector.inc file that will be included in the next section of the tutorial.</p>
-
-
----
-
-<p align="center"> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_main.md" target="_blank">MAIN PAGE</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_I.md" target="_blank">SECTION I</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_II.md" target="_blank">SECTION II</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_III.md" target="_blank">SECTION III</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_IV.md" target="_blank">SECTION IV</a> | <a href="https://github.com/arvpinto/enzyme_ts_cp2k/blob/main/enzyme_TS_cp2k_V.md" target="_blank">SECTION V</a> | </p> 
 
 
