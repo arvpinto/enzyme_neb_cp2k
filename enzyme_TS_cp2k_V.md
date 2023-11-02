@@ -1,5 +1,5 @@
 <br>
-<h2><p align="center"> V - TS optimization with the Dimer method </p></h2>
+<h2><p align="center"><b> V - TS optimization with the Dimer method </b></p></h2>
 
 <br/>
 
