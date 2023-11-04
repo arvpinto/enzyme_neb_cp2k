@@ -44,13 +44,6 @@ $hr-border-color: #BBBBBB !default;
   background-image: linear-gradient(to top, #FFFFFF 0%, #272727 100%);
 }
 
-.row .header-left {
-  position: absolute;
-  width: 100%;
-  align-items: center;
-  vertical-align: middle;
-}
-
 .header-right {
   float: right;
   width: 30%;
@@ -60,13 +53,6 @@ $hr-border-color: #BBBBBB !default;
   width: 100%;
   height: auto;
   padding: 0px;
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-  padding-top: 0px;
 }
 
 .btn:hover {
