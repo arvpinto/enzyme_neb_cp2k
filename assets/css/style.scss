@@ -7,13 +7,13 @@ $medium-breakpoint: 42em !default;
 
 // Headers
 $header-heading-color: #FFFFFF !default;
-$header-bg-color: #F01974;
+$header-bg-color: #FF4545;
 $header-bg-color-secondary: #6676FC;
 
 // Text
 $section-headings-color: #6676FC;
 $body-text-color: #272727 !default;
-$body-link-color: #F01974 !default;
+$body-link-color: #FF4545 !default;
 $blockquote-text-color: #6676FC !default;
 
 // Code
@@ -63,10 +63,10 @@ $hr-border-color: #BBBBBB !default;
 }
 
 .btn:hover {
-color: #F01974;
+color: #FF4545;
 text-decoration: none;
 background-color: rgba(255,255,255,0.4);
-border-color: #F01974;
+border-color: #FF4545;
 font-size: 80%;
 height: 20%;
 border-radius: 20px;
@@ -76,8 +76,8 @@ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 
 .btn {
 color: #FFFFFF;
-border-color: #F01974;
-background-color: #F01974;
+border-color: #FF4545;
+background-color: #FF4545;
 font-size: 80%;
 height: 20%;
 border-radius: 20px;
