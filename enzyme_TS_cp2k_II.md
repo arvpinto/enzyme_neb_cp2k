@@ -3,11 +3,11 @@
 
 <br/>
 
-```js
+<pre style="color: white; background-color: black;">
 &GLOBAL
     RUN_TYPE GEO_OPT
 ...
-```
+</pre>
 
 ---
 
@@ -17,35 +17,35 @@ In this section, we obtain both a TS guess and initial coordinates for the CI-NE
 
 - <p align="justify">To alleviate the load of the optimization algorithms and ensure that the MM portion of the hamiltonian remains somewhat constant (i.e. the total energy is dominated by the energy change in the QM region) along the reaction path, we can fix a part of the system. To do so, we can start by chosing a VMD selection similar to the following:</p>
 
-```js
+<pre style="color: white; background-color: black;">
 same residue as all not within 15 of resname LIG
 same residue as all not within 15 of (resname LIG or protein)
-```
+</pre>
 
 <br/>
  
 - <p align="justify">Then we print the atom serial numbers of the selection to a file using the VMD command line.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 set sel [atomselect top "same residue as all not within 15 of (resname LIG or protein)"]
 set outfile [open freeze.dat w]
 puts $outfile [$sel get serial]
 close $outfile
-```
+</pre>
 
 <br/>
  
 - <p align="justify">We can't use the freeze.dat file directly to specify the LIST of atoms to fix because CP2K cannot parse so many atoms per line, therefore you have to modify this file. A workaround can be done with a bash script, printing 100 atoms per LIST line to the fixed_atoms.inc file, which is then specified in the CP2K input.</p>
 
-```js 
+<pre style="color: white; background-color: black;">
 FIXED_ATOMS=(`cat freeze.dat`)
 LIST_NUMBER=$(("${#FIXED_ATOMS[@]}"/100))
 for i in `seq 0 1 "$LIST_NUMBER"`; do 
     echo -n "LIST "
     echo "${FIXED_ATOMS[@]:$(("$i"*100)):100}"
 done > fixed_atoms.inc
-```
-```js
+</pre>
+<pre style="color: white; background-color: black;">
 &MOTION
     ...
     &CONSTRAINT
@@ -53,13 +53,13 @@ done > fixed_atoms.inc
             @INCLUDE fixed_atoms.inc
         &END FIXED_ATOMS
     ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">Then we have to set the collective variable (CV) that we want to use as a trial reaction coordinate in the &FORCE_EVAL/&SUBSYS section of the input. CP2K offers many functions to define CVs, here we are using a &DISTANCE_FUNCTION CV which is a distance addition (i.e. COEFFICIENT +1.0) function that assumes the form CV=d1+d2.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &FORCE_EVAL
     ...
     &SUBSYS
@@ -71,13 +71,13 @@ done > fixed_atoms.inc
             &END DISTANCE_FUNCTION
         &END COLVAR
         ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">And we decide what happens to the CV in the &MOTION/&CONSTRAINT/&COLLECTIVE section, where the TARGET keyword is the value of the constrained CV and the &RESTRAINT section specifies a force constant of 50.0 angstrom^-2*kcalmol for the harmonic restraint.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     ...
     &CONSTRAINT
@@ -90,7 +90,7 @@ done > fixed_atoms.inc
                 &END RESTRAINT
         &END COLLECTIVE
         ...
-```
+</pre>
 
 <br/>
  
@@ -98,7 +98,7 @@ done > fixed_atoms.inc
 
 <p align="justify">*Note that the restart file name from the last geometry optimization of the previous tutorial section has to be changed to SCAN_4.75-1.restart to be read as the first structure.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 for i in `seq 4.50 -0.25 2.50`; do
         LAST_GEO=`echo "$i" + 0.25 | bc -l`
         cp scan.inp scan_"$i".inp
@@ -110,26 +110,26 @@ for i in `seq 4.50 -0.25 2.50`; do
 
         wait
 done
-```
+</pre>
 
 <br/>
  
 - <p align="justify">The &EXT_RESTART section should specify to load everything but the constraints and counters from the restart file.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &EXT_RESTART
     RESTART_FILE_NAME RESTART_TAG
     RESTART_DEFAULT .TRUE.
     RESTART_CONSTRAINT .FALSE.
     RESTART_COUNTERS .FALSE.
 &END EXT_RESTART
-```
+</pre>
 
 <br/>
  
 - <p align="justify">After running all the PES scan points, we can use the cp2k_energy_analysis.sh script to print the decomposition of the energy for each output.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 ./cp2k_energy_analysis.sh scan_*.out
 Reverse order? (y/n)
 y
@@ -143,7 +143,7 @@ scan_3.25.out 	 48 	-1101.538629686861213 	-269.42986051759254 	-832.10876916926
 scan_3.00.out 	 68 	-1101.531628450303515 	-269.41916696488789 	-832.112461485415625	19.247116410422567	20.860301590633675	-1.613185180211108
 scan_2.75.out 	 67 	-1101.531794161027847 	-269.41994863747573 	-832.111845523552117	19.143132930904237	20.369802041764075	-1.226669110859837
 scan_2.50.out 	 158 	-1101.535725675905041 	-269.42372519260118 	-832.112000483303861	16.676107345465003	18.000013700544200	-1.323906355079197
-```
+</pre>
 
 <br/>
  
