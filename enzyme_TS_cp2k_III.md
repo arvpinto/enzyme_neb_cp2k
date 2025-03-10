@@ -29,7 +29,6 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
         USE_COLVARS .TRUE.
         POT_TYPE ME
         ...
-...
 </pre>
 <pre style="color: white; background-color: black;">
 
