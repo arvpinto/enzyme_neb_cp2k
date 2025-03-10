@@ -3,11 +3,11 @@
 
 <br/>
  
-```js
+<pre style="color: white; background-color: black;">
 &GLOBAL
     RUN_TYPE BAND
 ...
-```
+</pre>
 
 ---
 
@@ -17,7 +17,7 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
 
 - <p align="justify">We need to specify a new &MOTION/&BAND section, with the BAND_TYPE CI_NEB keyword to activate the climbing image nudged elastic band method. The number of available processors will limit the number of replicas to be run, according to the relation N MPI tasks = NPROC_REP x NUMBER_OF_REPLICA. Note, it is very important to use enough replicas to guarantee the quality of your MEP results, otherwise the distance between replicas might be too large (check the main ouput for the RMSD distance between adjacent replicas, the DISTANCES REP values must be at least 1-2 Å). The value of the spring constant used in the band K_SPRING is the default and we turn off the ROTATE_FRAMES and ALIGN_FRAMES keywords. The USE_COLVARS keyword is turned on to project the band in a subspace of CVs in order to help achieve convergence, and the POT_TYPE ME keyword is set to calculate the minimum energy path.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &BAND
         BAND_TYPE CI-NEB
@@ -30,8 +30,8 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
         POT_TYPE ME
         ...
 ...
-```
-```js
+</pre>
+<pre style="color: white; background-color: black;">
 
  BAND TYPE                     =                                          CI-NEB
  BAND TYPE OPTIMIZATION        =                                            DIIS
@@ -54,13 +54,13 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
                     -1101.546798    -1101.547221    -1101.547372    -1101.546369
                     -1101.543620    -1101.544619    -1101.544214    -1101.545160
  BAND TOTAL ENERGY [au]        =                           -35249.41787031546846
-```
+</pre>
 
 <br/>
  
 - <p align="justify">By turning USE_COLVARS on, we have to specify the CVs that we are using in the &FORCE_EVAL/&SUBSYS and &MOTION/&CONSTRAINT section, as well as a &MOTION/&CONSTRAINT/&COLLECTIVE/&RESTRAINT section with a force constant of our choosing.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &FORCE_EVAL
     ...
     &SUBSYS
@@ -69,8 +69,8 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
                 ATOMS 2590 28386 7003 28388
                 COEFFICIENT +1.0
         	...
-```
-```js
+</pre>
+<pre style="color: white; background-color: black;">
 &MOTION
     ...
     &CONSTRAINT
@@ -80,13 +80,13 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
                 &RESTRAINT
                     K [angstrom^-2*kcalmol] 50.0
                 ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">The &MOTION/&BAND/&CONVERGENCE_CONTROL section sets the convergence criteria for the band.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &BAND
     ...
@@ -102,20 +102,20 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
  
 - <p align="justify">The NSTEPS_IT keyword in the &MOTION/&BAND/&CI-NEB section specifies the number of improved tangengent nudged elastic band (IT-NEB) steps to be employed before switching to CI-NEB.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &BAND
     ...
         &CI_NEB
             NSTEPS_IT  5
         ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">The &MOTION/&BAND/&OPTIMIZE_BAND section defines the optimization method used for the band, and the OPTIMIZE_END_POINTS optimizes the end points of the band when turned on.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &BAND
     ...
@@ -125,13 +125,13 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
                 &DIIS
                     MAX_STEPS 500
                 ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">And we use the optimized structures of the PES scan in XYZ format to specify the initial coordinates for each replica.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &BAND
     ...
@@ -139,13 +139,13 @@ In this section of the tutorial, we use the optimized strutures of the PES scan 
             COORD_FILE_NAME SCAN_4.50_DFTB-pos-1.xyz
         &END
         ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">After the NEB calculation reaches convergence, we can use the cp2k_energy_analysis.sh script to print the decomposition of the energy for each output.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 ./cp2k_energy_analysis.sh CI_NEB-BAND*.out
 Reverse order? (y/n)
 n
@@ -182,7 +182,7 @@ CI_NEB-BAND29.out 	 4983 	-1101.542928410642617 	-269.44654707857416 	-832.09638
 CI_NEB-BAND30.out 	 3751 	-1101.544558566488149 	-269.44734839812293 	-832.097210168365219	11.141157329707978	3.176463896742125	7.964693432965852
 CI_NEB-BAND31.out 	 3552 	-1101.544216432580697 	-269.44370433000546 	-832.100512102575237	11.355846356634107	5.463116640454550	5.892729716179557
 CI_NEB-BAND32.out 	 3215 	-1101.545169619122589 	-269.44218411988498 	-832.102985499237609	10.757721801596878	6.417048491055750	4.340673310541128
-```
+</pre>
 
 <br/>
 
