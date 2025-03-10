@@ -3,11 +3,11 @@
 
 <br/>
 
-```js
+<pre style="color: white; background-color: black;">
 &GLOBAL
     RUN_TYPE GEO_OPT
 ...
-```
+</pre>
 
 ---
 
@@ -17,18 +17,18 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
 
 - <p align="justify">With the TYPE TRANSITION_STATE keyword we specify a transition state optimization in the &MOTION/&GEO_OPT section.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &GEO_OPT
         TYPE TRANSITION_STATE
     ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">We use a conjugate gradients algorithm for the geometry optimization.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &GEO_OPT
         ...
@@ -39,13 +39,13 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
                 TYPE 2PNT
                 &2PNT
                 ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">Then we specify the transition state search method in the &MOTION/&GEO_OPT/&TRANSITION_STATE section with the METHOD DIMER keyword. In the &MOTION/&GEO_OPT/&TRANSITION_STATE/&DIMER section we specify the DR parameter, which is associated with the displacement between dimer images and influences the efficiency of your search, since it has to be adequate for the PES region we are studying and might require some tunning. In addition we have to set the ANGLE_TOLERANCE parameter, which controls the tolerance of the angle used in the optimization of the dimer orientation, and turn on the INTERPOLATE_GRADIENT keyword to interpolate the gradient whenever possible during the dimer optimization.</p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &GEO_OPT
         ...
@@ -55,7 +55,7 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
                 DR 0.01
                 ANGLE_TOLERANCE [deg] 1.5
                 INTERPOLATE_GRADIENT  T
-```
+</pre>
 
 <br/>
  
@@ -63,7 +63,7 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
 
 
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &GEO_OPT
         ...
@@ -74,13 +74,13 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
                 &DIMER_VECTOR
                     @INCLUDE dimer_vector.inc
                 ...
-```
+</pre>
 
 <br/>
  
 - <p align="justify">We also have to specify the section that defines the parameters for the optimization of the dimer rotation. </p>
 
-```js
+<pre style="color: white; background-color: black;">
 &MOTION
     &GEO_OPT
         ...
@@ -97,7 +97,7 @@ In this section, we use the dimer method to optimize the geometry of the TS gues
                             TYPE 2PNT
                             &2PNT
                             ...
-```
+</pre>
 
 <br/>
 
