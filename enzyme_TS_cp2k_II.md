@@ -35,16 +35,12 @@ close $outfile
 
 <br/>
  
-- <p align="justify">We can't use the freeze.dat file directly to specify the LIST of atoms to fix because CP2K cannot parse so many atoms per line, therefore you have to modify this file. A workaround can be done with a bash script, printing 100 atoms per LIST line to the fixed_atoms.inc file, which is then specified in the CP2K input.</p>
+- <p align="justify">We can't use the freeze.dat file directly to specify the LIST of atoms to fix because CP2K cannot parse so many atoms per line, therefore you have to modify this file. A workaround can be done with awk, printing 100 atoms per LIST line to the fixed_atoms.inc file, which is then specified in the CP2K input.</p>
 
 <pre style="color: white; background-color: black;">
-FIXED_ATOMS=(`cat freeze.dat`)
-LIST_NUMBER=$(("${#FIXED_ATOMS[@]}"/100))
-for i in `seq 0 1 "$LIST_NUMBER"`; do 
-    echo -n "LIST "
-    echo "${FIXED_ATOMS[@]:$(("$i"*100)):100}"
-done > fixed_atoms.inc
+awk 'NR % 100 == 1 {if (NR > 1) print ""; printf "LIST "} {printf "%s ", $0} END {print ""}' freeze.dat > fixed_atoms.inc
 </pre>
+
 <pre style="color: white; background-color: black;">
 &MOTION
     ...
