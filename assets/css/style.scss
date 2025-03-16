@@ -62,6 +62,17 @@ $hr-border-color: #BBBBBB !default;
   padding: 0px;
 }
 
+.github-button {
+  position: absolute; /* Positioned relative to its normal position */
+  top: 50px; /* Moves the element down 10px */
+  right: 50px;
+}
+
+.github-button img {
+    width: 50px; /* Adjust size */
+    height: 50px;
+}
+
 .btn:hover {
 color: #FF4545;
 text-decoration: none;
