@@ -1,70 +1,154 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="{{ site.lang | default: 'en' }}">
   <head>
     <meta charset="UTF-8">
-
-{% seo %}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="red">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+{% seo %}
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    {% include head-custom.html %}
   </head>
   <body>
-    <a id="skip-to-content" href="#content">Skip to the content.</a>
+{%- comment -%} Where this page sits in site.sections (for the menu and the Previous / Next links). {%- endcomment -%}
+{%- assign cur = -1 -%}
+{%- for s in site.sections -%}{%- if s.url == page.url -%}{%- assign cur = forloop.index0 -%}{%- endif -%}{%- endfor -%}
+{%- assign is_home = false -%}
+{%- if page.url == '/' or page.url == '/index.html' -%}{%- assign is_home = true -%}{%- endif -%}
+{%- assign last = site.sections | size | minus: 1 %}
 
-    <header class="page-header" role="banner">
-      <center>
-      <br>
-      <br>
-      <div class="row">
-      <div class="header-left">
-      <h2 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h2>
-      </div>
-      <div class="header-left">
-      <h4>Alexandre V. Pinto, PhD in Chemistry</h4>
-      <h4><a href="https://laqv.requimte.pt/research/research-groups/407-high_performance_computing_in_molecular_modelling" target="_blank">High Performance Computing in Molecular Modelling Research Group - LAQV@REQUIMTE</a></h4>
-      <h4>Department of Chemistry and Biochemistry, Faculty of Sciences, University of Porto</h4>
-      </div>
-      <div class="header-right">
-      <img class="logo" src="assets/img/US_TUTORIAL.png" alt="biochem logo" width="1000" height="521" />
-      </div>
-      </div>
-      <center>
+    <a class="skip" href="#content">Skip to the tutorial</a>
+
+    <header class="topbar">
+      <nav class="wrap topbar-inner" aria-label="Main">
+        <a class="brand" href="{{ site.home_url }}">
+          <svg class="brand-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+            <path d="M16 3.5 26.8 9.75v12.5L16 28.5 5.2 22.25V9.75Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <circle cx="16" cy="3.8" r="3.4" fill="#e5383b"/>
+            <circle cx="26.6" cy="22.1" r="3.4" fill="#0053d6"/>
+            <circle cx="5.4" cy="22.1" r="3.4" fill="#ff7d45"/>
+          </svg>
+          CompBioChem
+        </a>
+        <ul class="nav-links" role="list">
+          <li class="hide-sm"><a href="{{ site.home_url }}#catalogue">Tutorials</a></li>
+          <li class="hide-sm"><a href="{{ site.home_url }}#about">About</a></li>
+          <li>
+            <a class="pill pill--light" href="{{ site.repo_url }}" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              GitHub
+            </a>
+          </li>
+        </ul>
+      </nav>
     </header>
-      <a href="https://github.com/arvpinto/enzyme_neb_cp2k" class="github-button" target="_blank">
-      <img src="https://raw.githubusercontent.com/arvpinto/arvpinto.github.io/refs/heads/main/assets/img/github-logo.png" alt="GitHub" />
-      </a>
-      <div class="buttongrp" style="text-align:center">
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/" class="btn"><b>Tutorial</b> <br> Main Page</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_I.html" class="btn"><b>Section I</b> <br> Geometry Optimization</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_II.html" class="btn"><b>Section II</b> <br> PES Scan</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_III.html" class="btn"><b>Section III</b> <br> Nudgded Elastic Band</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_IV.html" class="btn"><b>Section IV</b> <br> Vibrational Analysis</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_V.html" class="btn"><b>Section V</b> <br> Dimer Method</a>
-      </div> 
-    <main id="content" class="main-content" role="main">
-      {{ content }}
-    </main>
-      <div class="buttongrp" style="text-align:center">
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/" class="btn"><b>Tutorial</b> <br> Main Page</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_I.html" class="btn"><b>Section I</b> <br> Geometry Optimization</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_II.html" class="btn"><b>Section II</b> <br> PES Scan</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_III.html" class="btn"><b>Section III</b> <br> Nudgded Elastic Band</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_IV.html" class="btn"><b>Section IV</b> <br> Vibrational Analysis</a>
-      <a href="https://arvpinto.github.io/enzyme_neb_cp2k/enzyme_TS_cp2k_V.html" class="btn"><b>Section V</b> <br> Dimer Method</a>
+
+    <main style="--topic: {{ site.topic_color | default: '#65cbf3' }}">
+      {%- if is_home %}
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap hero-grid">
+          <picture class="hero-art">
+            {%- if site.hero %}
+            <img src="{{ site.hero.src | relative_url }}"{% if site.hero.src_small %} srcset="{{ site.hero.src_small | relative_url }} {{ site.hero.small_width }}w, {{ site.hero.src | relative_url }} {{ site.hero.width }}w" sizes="(min-width: 1000px) 560px, 100vw"{% endif %} alt="{{ site.hero.alt }}" width="{{ site.hero.width }}" height="{{ site.hero.height }}">
+            {%- else %}
+            <img src="{{ site.image | relative_url }}" alt="" >
+            {%- endif %}
+          </picture>
+
+          <div class="hero-text">
+            <p class="kicker"><a href="{{ site.home_url }}#catalogue">CompBioChem Tutorials</a> <span aria-hidden="true">/</span> {{ site.topic }}</p>
+            <h1 id="hero-title"{% if site.title.size > 70 %} class="is-long"{% endif %}>{{ site.title }}</h1>
+            <p class="lede">{{ site.description }}</p>
+
+            <div class="actions">
+              {%- if site.sections.size > 1 %}
+              <a class="pill pill--accent pill--lg" href="{{ site.sections[1].url | relative_url }}">Start with Section {{ site.sections[1].num }}</a>
+              {%- endif %}
+              <a class="pill pill--outline pill--lg" href="{{ site.repo_url }}" target="_blank" rel="noopener">Source on GitHub</a>
+            </div>
+
+            <ul class="facts" role="list">
+              {%- if site.series %}<li class="fact--strong">{{ site.series }}</li>{% endif %}
+              {%- for t in site.tools %}<li>{{ t }}</li>{% endfor %}
+            </ul>
+
+            <div class="author">
+              <p class="author-name">Alexandre V. Pinto, PhD in Chemistry</p>
+              <p><a href="https://laqv.requimte.pt/research/research-groups/407-high_performance_computing_in_molecular_modelling" target="_blank" rel="noopener">High Performance Computing in Molecular Modelling Research Group, LAQV-REQUIMTE</a></p>
+              <p>Department of Chemistry and Biochemistry, Faculty of Sciences, University of Porto</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      {%- else %}
+      <div class="wrap page-head">
+        <p class="kicker"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></p>
       </div>
-    <footer class="site-footer" role="banner">
-      <center>
-      <br>
-      <br>
-      {% if site.github.is_project_page %}
-        <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained at <a href="https://arvpinto.github.io/">{{ site.github.owner_name }}</a>.</span>
-      {% endif %}
-      <br>
-      <center>
+      {%- endif %}
+
+      <div class="wrap guide{% unless is_home %} guide--section{% endunless %}">
+        <aside class="side" aria-label="Tutorial navigation">
+          <nav class="sections" aria-label="Sections">
+            <p class="side-title">Sections</p>
+            <ol role="list">
+              {%- for s in site.sections %}
+              <li><a href="{{ s.url | relative_url }}"{% if forloop.index0 == cur %} aria-current="page"{% endif %}><span class="n">{{ s.num }}</span>{{ s.title }}</a></li>
+              {%- endfor %}
+            </ol>
+          </nav>
+          <nav class="toc-wrap" aria-label="On this page" hidden>
+            <p class="side-title">On this page</p>
+            <ol class="toc" id="toc" role="list"></ol>
+          </nav>
+        </aside>
+
+        <div class="main-col">
+          <article class="prose" id="content">
+            {{ content }}
+          </article>
+
+          {%- if cur >= 0 %}
+          <nav class="pager" aria-label="Previous and next section">
+            {%- if cur > 0 %}
+            {%- assign p = cur | minus: 1 %}{%- assign ps = site.sections[p] %}
+            <a class="pager-link" href="{{ ps.url | relative_url }}" rel="prev">
+              <span class="pager-label">Previous</span>
+              <span class="pager-title">{% if ps.num %}{{ ps.num }}. {% endif %}{{ ps.title }}</span>
+            </a>
+            {%- elsif site.previous_tutorial %}
+            <a class="pager-link" href="{{ site.previous_tutorial.url }}">
+              <span class="pager-label">Previous tutorial</span>
+              <span class="pager-title">{{ site.previous_tutorial.title }}</span>
+            </a>
+            {%- else %}<span></span>{% endif %}
+            {%- if cur < last %}
+            {%- assign n = cur | plus: 1 %}{%- assign ns = site.sections[n] %}
+            <a class="pager-link pager-link--next" href="{{ ns.url | relative_url }}" rel="next">
+              <span class="pager-label">Next</span>
+              <span class="pager-title">{% if ns.num %}{{ ns.num }}. {% endif %}{{ ns.title }}</span>
+            </a>
+            {%- elsif site.next_tutorial %}
+            <a class="pager-link pager-link--next" href="{{ site.next_tutorial.url }}">
+              <span class="pager-label">Next tutorial</span>
+              <span class="pager-title">{{ site.next_tutorial.title }}</span>
+            </a>
+            {%- endif %}
+          </nav>
+          {%- endif %}
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p class="brand--small">{{ site.title }}</p>
+        <p>Part of <a href="{{ site.home_url }}">CompBioChem Tutorials</a> by Alexandre V. Pinto</p>
+        <p><a href="{{ site.repo_url }}" target="_blank" rel="noopener">Source of this page</a></p>
+      </div>
     </footer>
+
+    <script src="{{ '/assets/js/tutorial.js' | relative_url }}" defer></script>
   </body>
 </html>

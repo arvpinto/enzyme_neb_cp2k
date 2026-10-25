@@ -1,104 +1,547 @@
 ---
 ---
 
-// Breakpoints
-$large-breakpoint: 64em !default;
-$medium-breakpoint: 42em !default;
+/* Tutorial pages: styles matching the CompBioChem Tutorials home page
+   (black background, Hanken Grotesk, same menu bar, pills and colours).
+   The text of each page comes from its Markdown file and is styled under .prose. */
 
-// Headers
-$header-heading-color: #FFFFFF !default;
-$header-bg-color: #FF4545;
-$header-bg-color-secondary: #6676FC;
+:root {
+  --bg: #000000;
+  --surface: #0e1014;
+  --surface-2: #1a1d24;
+  --ink: #f3f5f8;
+  --ink-2: #9ba3b1;
+  --line: #23272f;
+  --accent: #65cbf3;
+  --accent-ink: #001520;
+  --code-bg: #0b0d11;
+  --code-ink: #e3e7ee;
+  --glass: rgba(0, 0, 0, 0.72);
 
-// Text
-$section-headings-color: #6676FC;
-$body-text-color: #272727 !default;
-$body-link-color: #FF4545 !default;
-$blockquote-text-color: #6676FC !default;
+  --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  --wrap: 1240px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --topbar: 64px;
 
-// Code
-$code-bg-color: #272727 !default;
-$code-text-color: #FFFFFF !default;
-
-// Borders
-$border-color: #272727 !default;
-$table-border-color: #717171 !default;
-$hr-border-color: #BBBBBB !default;
-
-
-@import "{{ site.theme }}";
-
-.project-name {
-  font-size: 150%;
-  width: 50%;
-  text-align: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  text-shadow: 0 0 3px #272727, 0 0 5px #272727;
-  color: #FFFFFF;
+  color-scheme: dark;
 }
 
-.page-header {
-  width: auto;
-  height: 100%;
-  padding: 0px;
-  background-image: linear-gradient(to top, #FFFFFF 0%, #272727 100%);
+/* ---------------------------------------------------------------- base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--topbar) + 24px);
+  background: var(--bg);
 }
 
-.header-left {
-  width: 100%;
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.skip {
+  position: absolute;
+  left: 16px; top: -60px;
+  z-index: 50;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 999px;
+  font-weight: 600;
+}
+.skip:focus { top: 12px; }
+
+@media (max-width: 719.98px) { .hide-sm { display: none !important; } }
+
+/* --------------------------------------------------------------- pills */
+
+.pill {
+  display: inline-flex;
   align-items: center;
-  vertical-align: middle;
-  color: #272727;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, filter 0.15s;
+}
+.pill--lg { min-height: 52px; padding: 0 24px; font-size: 1rem; }
+.pill--light { background: var(--ink); color: var(--bg); }
+.pill--light:hover { background: #ffffff; }
+.pill--accent { background: var(--accent); color: var(--accent-ink); }
+.pill--accent:hover { filter: brightness(1.1); }
+.pill--outline { border-color: var(--line); background: transparent; color: var(--ink); }
+.pill--outline:hover { border-color: var(--ink-2); }
+
+/* -------------------------------------------------------------- topbar */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+          backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar-inner {
+  height: var(--topbar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.brand-mark { color: var(--ink); flex: none; }
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-links a:not(.pill) {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.nav-links a:not(.pill):hover { color: var(--ink); background: var(--surface-2); }
+.nav-links li:last-child { margin-left: 8px; }
+
+/* ------------------------------------------------- hero (main page only) */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.header-right {
-   width: 30%;
-}
-
-.page-header .logo {
+.hero-art {
+  display: block;
   width: 100%;
+  max-width: 560px;
+  margin: 32px auto 0;
+}
+.hero-art img { width: 100%; height: auto; }
+
+.hero-text { padding: 24px 0 48px; }
+
+.kicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.kicker::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--topic);
+}
+.kicker a { text-decoration: none; }
+.kicker a:hover { color: var(--ink); }
+
+.hero h1 {
+  margin: 0 0 18px;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 7vw, 3rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.hero h1.is-long { font-size: clamp(2rem, 6vw, 2.5rem); }   /* titles over 70 characters */
+
+.lede {
+  max-width: 34em;
+  margin: 0 0 28px;
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+
+.facts {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.facts li {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+.facts .fact--strong {
+  background: color-mix(in srgb, var(--topic) 18%, var(--surface-2));
+  color: var(--ink);
+}
+
+.author {
+  margin: 0;
+  padding-left: 16px;
+  border-left: 2px solid #ff5257;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.author p { margin: 0 0 4px; }
+.author .author-name { color: var(--ink); font-weight: 600; font-size: 1rem; }
+.author a { text-decoration-color: rgba(255, 255, 255, 0.35); text-underline-offset: 3px; }
+.author a:hover { color: var(--ink); text-decoration-color: #ff5257; }
+
+@media (min-width: 1000px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: 56px;
+    align-items: center;
+  }
+  .hero-art { order: 2; margin: 0 0 0 auto; }
+  .hero-text { order: 1; padding: 64px 0; }
+  .hero-text > * { max-width: 36rem; }
+  .hero h1 { font-size: clamp(2.75rem, 4vw, 3.5rem); }
+  .hero h1.is-long { font-size: clamp(2.25rem, 3vw, 2.75rem); }
+}
+
+/* Section pages: a small link back to the tutorial's main page. */
+.page-head { padding-top: clamp(28px, 4vw, 48px); }
+.page-head .kicker { margin: 0; flex-wrap: nowrap; align-items: flex-start; }
+.page-head .kicker::before { flex: none; margin-top: 0.45em; }
+
+/* ---------------------------------------- layout: navigation + page text */
+
+.guide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  padding-top: 24px;
+  padding-bottom: clamp(72px, 10vw, 120px);
+}
+.guide:not(.guide--section) { border-top: 1px solid var(--line); }
+.guide--section { padding-top: 12px; }
+
+.side-title {
+  margin: 0 0 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.sections ol, .toc { list-style: none; margin: 0; padding: 0; }
+.sections a, .toc a {
+  display: flex;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.sections a:hover, .toc a:hover { color: var(--ink); background: var(--surface); }
+.sections a[aria-current="page"] { color: var(--ink); background: var(--surface-2); font-weight: 600; }
+.sections .n { min-width: 2.2em; color: var(--topic); font-weight: 600; }
+.toc a { font-size: 0.875rem; padding: 5px 12px; }
+.toc a[aria-current="true"] { color: var(--ink); }
+.toc a[aria-current="true"]::before {
+  content: "";
+  flex: none;
+  width: 2px;
+  margin-left: -8px;
+  background: var(--topic);
+  border-radius: 2px;
+}
+
+@media (max-width: 1099.98px) {
+  .side { border-bottom: 1px solid var(--line); padding: 8px 0 20px; }
+  .sections ol { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sections a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.875rem; }
+  .sections .n { min-width: 0; }
+  .toc-wrap { display: none; }
+}
+
+@media (min-width: 1100px) {
+  .guide {
+    grid-template-columns: 250px minmax(0, 48rem);
+    gap: 64px;
+    padding-top: 56px;
+  }
+  .guide--section { padding-top: 24px; }
+  .side {
+    position: sticky;
+    top: calc(var(--topbar) + 32px);
+    align-self: start;
+    max-height: calc(100vh - var(--topbar) - 64px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .toc-wrap { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
+}
+
+/* ---------------------------------------------------------- page text */
+
+/* The Markdown uses align="..." attributes, inline colours and <br> spacers
+   (so the files also read well on GitHub); here the stylesheet takes over. */
+.prose {
+  min-width: 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+.prose > br { display: none; }
+.prose p:empty { display: none; }   /* left behind by "- <p>...</p>" list items */
+.prose p { margin: 0 0 1.1em; text-align: left; }
+.prose b, .prose strong { color: var(--ink); font-weight: 600; }
+.prose i, .prose em { color: var(--ink); }
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(101, 203, 243, 0.4);
+  text-underline-offset: 3px;
+}
+.prose a:hover { text-decoration-color: currentColor; }
+
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+/* Opening paragraph of the main page */
+.guide:not(.guide--section) .prose > p:first-child {
+  font-size: clamp(1.1875rem, 1.9vw, 1.375rem);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.guide:not(.guide--section) .prose > p:first-child b { font-weight: 500; }
+
+/* Headings: h2 is the title of a section page, h3 its parts. */
+.prose h2, .prose h3 {
+  color: var(--ink);
+  font-weight: 600;
+  text-align: left;
+}
+.prose h2 p, .prose h3 p { margin: 0; text-align: left; }
+.prose h2 b, .prose h3 b { font-weight: inherit; }
+
+.prose h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0 0 28px;
+  font-size: clamp(2rem, 4.4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.prose h2 .n {
+  flex: none;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--topic);
+}
+
+.prose h3 {
+  margin: 56px 0 18px;
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+.prose hr + h3, .prose hr + br + h3 { margin-top: 0; }
+
+/* Lists (the Markdown wraps each item in a <p>) */
+.prose ul, .prose ol { margin: 0 0 1.2em; padding-left: 1.25em; }
+.prose li { margin: 0 0 0.75em; padding-left: 0.25em; }
+.prose li::marker { color: var(--topic); }
+.prose li > p { margin: 0; }
+
+.prose sup, .prose sub { line-height: 0; }
+
+.prose code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.875em;
+}
+
+/* Code and output blocks. !important overrides the inline colours in the Markdown. */
+.prose pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  background: var(--code-bg) !important;
+  color: var(--code-ink) !important;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-family: var(--mono);
+  font-size: 0.84375rem;
+  line-height: 1.6;
+  tab-size: 4;
+  scrollbar-width: thin;
+}
+.prose > pre, .prose .code { margin: 0 0 1.4em; }
+.prose .code { position: relative; }
+.prose .code pre { padding-right: 84px; }
+.copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.85;
+  transition: color 0.15s, border-color 0.15s, opacity 0.15s;
+}
+.copy:hover, .copy:focus-visible { color: var(--ink); border-color: var(--ink-2); opacity: 1; }
+.copy[data-done] { color: var(--accent); border-color: var(--accent); }
+/* With a mouse, the button appears on hover so it never hides the end of a line. */
+@media (hover: hover) {
+  .copy { opacity: 0; }
+  .code:hover .copy, .copy:focus-visible, .copy[data-done] { opacity: 1; }
+}
+
+/* Tables */
+.prose .table-wrap {
+  margin: 0 0 1.4em;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; line-height: 1.5; }
+.prose th, .prose td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.prose th { color: var(--ink); font-weight: 600; background: var(--surface); text-align: left; }
+.prose tr:last-child td { border-bottom: 0; }
+.prose td:first-child { color: var(--ink); white-space: nowrap; }
+
+/* Figures. PNG plots and diagrams have white backgrounds, so they sit on a
+   white panel; GIF animations are full renders and only get rounded corners. */
+.prose div[align="center"] { margin: 8px 0 1.6em; }
+.prose div[align="center"] img {
   height: auto;
-  padding: 0px;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+.prose div[align="center"] img[src$=".png"] {
+  padding: 8px;
+  background: #ffffff;
 }
 
-.github-button {
-  position: absolute; /* Positioned relative to its normal position */
-  top: 50px; /* Moves the element down 10px */
-  right: 50px;
+/* Highlighted sentences (<p align="center"> directly in the text, not inside headings) */
+.prose > p[align="center"] {
+  padding: 16px 20px;
+  border-left: 3px solid var(--topic);
+  border-radius: 0 12px 12px 0;
+  background: var(--surface);
+  color: var(--ink);
 }
 
-.github-button img {
-    width: 50px; /* Adjust size */
-    height: 50px;
+/* -------------------------------------------- previous / next section */
+
+.pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.pager-link:hover { border-color: var(--topic); }
+.pager-link--next { grid-column: 2; text-align: right; }
+.pager-label { font-size: 0.8125rem; font-weight: 600; color: var(--ink-2); }
+.pager-title { font-size: 1.0625rem; font-weight: 600; line-height: 1.3; color: var(--ink); }
+
+@media (max-width: 559.98px) {
+  .pager { grid-template-columns: minmax(0, 1fr); }
+  .pager > span:empty { display: none; }
+  .pager-link--next { grid-column: auto; }
 }
 
-.btn:hover {
-color: #FF4545;
-text-decoration: none;
-background-color: rgba(255,255,255,0.4);
-border-color: #FF4545;
-font-size: 80%;
-height: 20%;
-border-radius: 20px;
-width: 13%;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
+/* -------------------------------------------------------------- footer */
 
-.btn {
-color: #FFFFFF;
-border-color: #FF4545;
-background-color: #FF4545;
-font-size: 80%;
-height: 20%;
-border-radius: 20px;
-width: 13%;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-opacity: 0.7;
+.site-footer { border-top: 1px solid var(--line); }
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 28px;
+  padding-bottom: 40px;
+  font-size: 0.875rem;
+  color: var(--ink-2);
 }
+.footer-inner p { margin: 0; }
+.footer-inner a { text-underline-offset: 3px; }
+.footer-inner a:hover { color: var(--ink); }
+.brand--small { font-weight: 600; color: var(--ink); }
 
-.site-footer {
-  height: auto;
-  width: auto;
-  background-image: linear-gradient(to top, #272727 0%, #FFFFFF 100%);
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }

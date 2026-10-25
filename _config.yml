@@ -1,6 +1,54 @@
 title: Tutorial for Transition State (TS) searches of Enzymatic Reaction Mechanisms using QM/MM methods in CP2K
-show_downloads: true
-google_analytics:
-remote_theme: pages-themes/cayman@v0.2.0
+description: Locate the reactant, transition state and product of an enzymatic reaction with QM/MM geometry optimizations, a potential energy surface scan, the CI-NEB method, vibrational analysis and the dimer method in CP2K.
+author: Alexandre V. Pinto
+lang: en
+image: /assets/img/US_TUTORIAL.png
+
+# Shown at the top of the main page of the tutorial. "hero" is the image next to the title
+# (a large and a small version; the original is assets/img/US_TUTORIAL.png).
+topic: QM/MM
+topic_color: "#ff5257"
+series: Part 2 of Enzyme QM/MM with CP2K
+tools: [CP2K, parmed]
+hero:
+  src: /assets/img/US_TUTORIAL-1000.webp
+  src_small: /assets/img/US_TUTORIAL-600.webp
+  small_width: 600
+  width: 1000
+  height: 529
+  alt: Protein helices in rainbow colours around a bound lipid substrate shown as spheres
+previous_tutorial:
+  title: Preparing a QM/MM system
+  url: https://arvpinto.github.io/enzyme_qmmm_prep_cp2k/
+next_tutorial:
+  title: Dynamic QM/MM
+  url: https://arvpinto.github.io/enzyme_us_cp2k/
+
+# Pages of the tutorial, in reading order. They build the "Sections" menu and
+# the Previous / Next links at the bottom of every page.
+sections:
+  - title: Overview
+    url: /
+  - num: I
+    title: Geometry optimization
+    url: /enzyme_TS_cp2k_I.html
+  - num: II
+    title: PES scan
+    url: /enzyme_TS_cp2k_II.html
+  - num: III
+    title: Nudged elastic band
+    url: /enzyme_TS_cp2k_III.html
+  - num: IV
+    title: Vibrational analysis
+    url: /enzyme_TS_cp2k_IV.html
+  - num: V
+    title: Dimer method
+    url: /enzyme_TS_cp2k_V.html
+
+# Main site (CompBioChem Tutorials) and this repository.
+home_url: https://arvpinto.github.io/
+repo_url: https://github.com/arvpinto/enzyme_neb_cp2k
+
+# The pages use their own layout and stylesheet (no remote theme), matching the main site.
 plugins:
-- jekyll-remote-theme
+  - jekyll-seo-tag
