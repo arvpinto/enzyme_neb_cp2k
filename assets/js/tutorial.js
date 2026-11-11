@@ -1,5 +1,70 @@
-/* Tutorial pages: tidy the rendered Markdown, build "On this page",
-   highlight the part being read and add copy buttons to code blocks. */
+/* Behaviour of these pages:
+   0. light and dark mode (same choice as on the home page),
+   1. tidy the rendered Markdown, build "On this page", highlight the part
+      being read, add copy buttons to code blocks and links to embedded plots.
+   Each part is independent and the pages work without any of them. */
+
+/* ------------------------------------------------------------------
+   0. Light and dark mode.
+   The page starts dark unless light mode was chosen before in this
+   browser, here or on the home page (an inline script in <head> applies
+   that choice before the page is drawn). Images with a data-light-src
+   (and data-light-srcset) attribute are switched to their light version, and a "themechange"
+   event is sent for anything else that wants to follow the mode.
+------------------------------------------------------------------ */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var button = document.getElementById('theme-toggle');
+  var meta = document.querySelector('meta[name="theme-color"]');
+
+  function isLight() { return root.getAttribute('data-theme') === 'light'; }
+
+  function swapImages(light) {
+    Array.prototype.forEach.call(document.querySelectorAll('img[data-light-src]'), function (im) {
+      if (!im.dataset.darkSrc) {
+        im.dataset.darkSrc = im.getAttribute('src');
+        im.dataset.darkSrcset = im.getAttribute('srcset') || '';
+      }
+      var srcset = light ? (im.dataset.lightSrcset || '') : im.dataset.darkSrcset;
+      if (srcset) im.setAttribute('srcset', srcset); else im.removeAttribute('srcset');
+      im.setAttribute('src', light ? im.dataset.lightSrc : im.dataset.darkSrc);
+      im.classList.toggle('is-light', light);
+    });
+  }
+
+  function apply(light, announce) {
+    if (light) root.setAttribute('data-theme', 'light');
+    else root.removeAttribute('data-theme');
+    swapImages(light);
+    if (meta) meta.setAttribute('content', light ? '#ffffff' : '#000000');
+    if (button) {
+      button.setAttribute('aria-pressed', String(light));
+      button.setAttribute('title', light ? 'Switch to dark mode' : 'Switch to light mode');
+    }
+    if (announce) document.dispatchEvent(new CustomEvent('themechange', { detail: { light: light } }));
+  }
+
+  if (isLight()) apply(true, false);
+
+  if (button) {
+    button.addEventListener('click', function () {
+      var light = !isLight();
+      try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch (e) {}
+      apply(light, true);
+    });
+  }
+
+  /* The mode was changed in another tab (this page or the home page): follow it. */
+  window.addEventListener('storage', function (e) {
+    if (e.key === 'theme') apply(e.newValue === 'light', true);
+  });
+})();
+
+/* ------------------------------------------------------------------
+   1. Page text.
+------------------------------------------------------------------ */
 (function () {
   'use strict';
 
@@ -34,18 +99,31 @@
     h.appendChild(document.createTextNode(m[2]));
   });
 
-  /* ---- Parts of the page (h3): ids and the "On this page" list. */
+  /* ---- Parts of the page: ids and the "On this page" list. A page of a
+     multi-page site has one h2 (its title), so its parts are the h3s;
+     a single page has several h2s (I, II, ...), which are listed. */
   var toc = document.getElementById('toc');
-  var parts = Array.prototype.slice.call(prose.querySelectorAll('h3'));
+  var level = prose.querySelectorAll('h2').length > 1 ? 'h2' : 'h3';
+  var parts = Array.prototype.slice.call(prose.querySelectorAll(level));
   var links = [];
   parts.forEach(function (h) {
-    var title = h.textContent.replace(/\s+/g, ' ').trim().replace(/:$/, '');
+    var numEl = h.querySelector('.n');
+    var num = numEl ? numEl.textContent : '';
+    var title = h.textContent.replace(/\s+/g, ' ').trim();
+    if (num && title.indexOf(num) === 0) title = title.slice(num.length).trim();
+    title = title.replace(/:$/, '');
     if (!h.id) h.id = slug(title);
     if (!toc) return;
     var li = document.createElement('li');
     var a = document.createElement('a');
     a.href = '#' + h.id;
-    a.textContent = title;
+    if (num) {
+      var n = document.createElement('span');
+      n.className = 'n';
+      n.textContent = num;
+      a.appendChild(n);
+    }
+    a.appendChild(document.createTextNode(title));
     li.appendChild(a);
     toc.appendChild(li);
     links.push(a);
@@ -83,6 +161,22 @@
       });
     });
     box.appendChild(btn);
+  });
+
+  /* ---- Embedded plots: a link to open them full size in a new tab. */
+  each('iframe', function (f) {
+    var src = f.getAttribute('src');
+    if (!src) return;
+    var p = document.createElement('p');
+    p.className = 'embed-link';
+    var a = document.createElement('a');
+    a.href = src;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = 'Open the interactive plot in a new tab';
+    p.appendChild(a);
+    var box = f.parentNode === prose ? f : f.parentNode;
+    box.parentNode.insertBefore(p, box.nextSibling);
   });
 
   /* ---- Tables scroll sideways on small screens instead of overflowing. */
