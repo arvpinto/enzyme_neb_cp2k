@@ -1,0 +1,175 @@
+{
+  "_comment": "Pathways shown in the interactive NEB panel and in the movies. Atom numbers are CP2K/AMBER indices (1-based) of the full system; files are relative to --data-dir/<dir>. product_image: band image saved as P.pdb (lowest-energy image on the product side).",
+  "unit": "kcal/mol",
+  "pathways": [
+    {
+      "key": "single",
+      "label": "Single water",
+      "dir": "single_water",
+      "traj": "neb_single_water_traj.pdb",
+      "qmmm_inc": "forceeval_qmmm.cp2k.inc",
+      "band_outputs": "CI_NEB-BAND*.out",
+      "reference_output": "geo_opt.out",
+      "dimer_output": "dimer.out",
+      "vib_output": "VIB.out",
+      "ts_pdb": "TS.pdb",
+      "molden": "single_water_vib.mol",
+      "named_atoms": {
+        "34854": "OW",
+        "34855": "HW",
+        "34856": "H*",
+        "684": "Nδ1",
+        "1982": "C21",
+        "1981": "O21",
+        "1983": "O22",
+        "1898": "Ca"
+      },
+      "keys": [
+        {
+          "atoms": [
+            34854,
+            1982
+          ],
+          "label": "OW···C21",
+          "html": "O<sub>W</sub>···C21",
+          "role": "nucleophilic attack"
+        },
+        {
+          "atoms": [
+            34854,
+            34856
+          ],
+          "label": "OW-H*",
+          "html": "O<sub>W</sub>-H*",
+          "role": "water O-H cleavage"
+        },
+        {
+          "atoms": [
+            684,
+            34856
+          ],
+          "label": "Nδ1···H*",
+          "html": "N<sub>δ1</sub>(His47)···H*",
+          "role": "proton transfer to His47"
+        },
+        {
+          "atoms": [
+            1982,
+            1981
+          ],
+          "label": "C21-O21",
+          "html": "C21-O21",
+          "role": "ester bond cleavage"
+        },
+        {
+          "atoms": [
+            1981,
+            34856
+          ],
+          "label": "O21···H*",
+          "html": "O21···H*",
+          "role": "protonation of the leaving group"
+        }
+      ],
+      "core_residues": [
+        "HIE 47",
+        "CA 125"
+      ],
+      "extra_core_atoms": [
+        1983,
+        1898
+      ],
+      "product_image": 15
+    },
+    {
+      "key": "assisting",
+      "label": "Assisting water",
+      "dir": "assisting_water",
+      "traj": "neb_assisting_water_traj.pdb",
+      "qmmm_inc": "forceeval_qmmm.cp2k.inc",
+      "band_outputs": "CI_NEB-BAND*.out",
+      "reference_output": "geo_opt.out",
+      "dimer_output": "dimer.out",
+      "vib_output": "VIB.out",
+      "ts_pdb": "TS.pdb",
+      "molden": "assisting_water_vib.mol",
+      "named_atoms": {
+        "48030": "OW1",
+        "48032": "H*",
+        "38796": "OW2",
+        "38798": "H**",
+        "38797": "HW2",
+        "684": "Nδ1",
+        "1982": "C21",
+        "1981": "O21",
+        "1983": "O22",
+        "1898": "Ca"
+      },
+      "keys": [
+        {
+          "atoms": [
+            48030,
+            1982
+          ],
+          "label": "OW1···C21",
+          "html": "O<sub>W1</sub>···C21",
+          "role": "nucleophilic attack"
+        },
+        {
+          "atoms": [
+            48030,
+            48032
+          ],
+          "label": "OW1-H*",
+          "html": "O<sub>W1</sub>-H*",
+          "role": "water 1 O-H cleavage"
+        },
+        {
+          "atoms": [
+            38796,
+            48032
+          ],
+          "label": "OW2···H*",
+          "html": "O<sub>W2</sub>···H*",
+          "role": "proton transfer to water 2"
+        },
+        {
+          "atoms": [
+            38796,
+            38798
+          ],
+          "label": "OW2-H**",
+          "html": "O<sub>W2</sub>-H**",
+          "role": "water 2 O-H cleavage"
+        },
+        {
+          "atoms": [
+            1981,
+            38798
+          ],
+          "label": "O21···H**",
+          "html": "O21···H**",
+          "role": "protonation of the leaving group"
+        },
+        {
+          "atoms": [
+            1982,
+            1981
+          ],
+          "label": "C21-O21",
+          "html": "C21-O21",
+          "role": "ester bond cleavage"
+        }
+      ],
+      "core_residues": [
+        "HIE 47",
+        "CA 125"
+      ],
+      "extra_core_atoms": [
+        1983,
+        1898
+      ],
+      "product_image": 15
+    }
+  ]
+}
