@@ -11,7 +11,7 @@ transition states (`*_vib.mol`).
 |---|---|
 | `pathways.json` | definition of both pathways: files, atoms of the bonds that form or break, product image |
 | `build_neb_panel_data.py` | `assets/data/neb_panel.json` and the band trajectories used by the interactive panel of Section III |
-| `make_figures.py` | `assets/img/neb_energy_geometry.png` and `assets/img/energy_diagram.png` (600 dpi) |
+| `make_figures.py` | `assets/img/neb_key_distances.png` and `assets/img/energy_diagram.png` (600 dpi) |
 | `render_mode_movies.py` | `assets/media/mode_*_{dark,light}.mp4` and posters (needs Playwright with Chrome/Chromium, and ffmpeg) |
 
 The band-evolution figures of Section III (`assets/img/band_evolution_*.png`) are made
