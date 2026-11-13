@@ -240,7 +240,7 @@ CI_NEB-BAND16.out    582     -1164.566768188     -850.50112168     -314.06564651
 
 <p align="justify">The structures are the QM regions of the 16 final images (files neb_single_water_traj.pdb and neb_assisting_water_traj.pdb in assets/data). The 3D view uses <a href="https://3dmol.csb.pitt.edu/" target="_blank">3Dmol.js</a>.</p>
 
-<figure class="fig"><img src="assets/img/neb_energy_geometry.png" alt="Energy profiles and key distances along the two bands"><figcaption><b>Energy and geometry along the bands.</b> Top: energy of each image relative to the optimized reactant, with the highest image circled and the energy of the dimer-refined TS (dashed). Bottom: distances that change during the reaction (H&#42; is the proton released by the attacking water, H&#42;&#42; the proton of W2 that reaches O21).</figcaption></figure>
+<figure class="fig"><img src="assets/img/neb_key_distances.png" alt="Distances of the bonds that form or break along the two bands"><figcaption><b>Geometry along the bands.</b> Distances that change during the reaction in each image (the energies are in the panel above); the vertical line marks the highest image. H&#42; is the proton released by the attacking water, H&#42;&#42; the proton of W2 that reaches O21.</figcaption></figure>
 
 <br/>
 
