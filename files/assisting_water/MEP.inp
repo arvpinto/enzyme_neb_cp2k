@@ -1,0 +1,355 @@
+#===============================================================================
+# CI-NEB minimum energy path  |  QM/MM (PBE / AMBER)  |  hsPLA2
+#-------------------------------------------------------------------------------
+# Cores: NPROC_REP * NUMBER_OF_REPLICA = 64 * 16 = 1024
+#
+# Required files in the run directory:
+#   BASIS_SET, GTH_POTENTIALS        basis / pseudopotential libraries
+#   hpla2_ee.prmtop                  AMBER topology (FF + connectivity)
+#   REPLICA_*.xyz                    band images (see replica list in &BAND)
+#   forceeval_qmmm.cp2k.inc          QM kinds, QM cell, link atoms
+#   fixed_atoms.inc                  frozen atom list
+#
+# Reaction coordinate (COLVAR 1 = CV1 + CV2), defined at the end of &SUBSYS:
+#   CV1 = d(1982-48030) + d(38796-48032)
+#   CV2 = d(38797-1981)
+#===============================================================================
+
+
+#===============================================================================
+# GLOBAL
+#===============================================================================
+&GLOBAL
+  PROJECT     CI_NEB
+  RUN_TYPE    BAND
+  PRINT_LEVEL LOW
+  ECHO_INPUT
+  SAVE_MEM
+&END GLOBAL
+
+
+#===============================================================================
+# FORCE_EVAL - QM/MM energies and forces
+#===============================================================================
+&FORCE_EVAL
+  METHOD        QMMM
+  STRESS_TENSOR ANALYTICAL
+
+  #-----------------------------------------------------------------------------
+  # DFT - QM region
+  #-----------------------------------------------------------------------------
+  &DFT
+    CHARGE                0
+    MULTIPLICITY          1
+    BASIS_SET_FILE_NAME   BASIS_SET
+    POTENTIAL_FILE_NAME   GTH_POTENTIALS
+
+    &QS
+      METHOD GPW
+    &END QS
+
+    &MGRID
+      CUTOFF 300
+      COMMENSURATE
+    &END MGRID
+
+    &XC
+      &XC_FUNCTIONAL PBE
+      &END XC_FUNCTIONAL
+    &END XC
+
+    &SCF
+      SCF_GUESS  RESTART
+      EPS_SCF    1E-6
+      MAX_SCF    60
+      &OT
+        MINIMIZER       DIIS
+        PRECONDITIONER  FULL_SINGLE_INVERSE
+        SAFE_DIIS       TRUE
+      &END OT
+      &OUTER_SCF
+        EPS_SCF  1E-6
+        MAX_SCF  30
+      &END OUTER_SCF
+    &END SCF
+  &END DFT
+
+  #-----------------------------------------------------------------------------
+  # MM - AMBER force field and electrostatics
+  #-----------------------------------------------------------------------------
+  &MM
+    &FORCEFIELD
+      PARMTYPE       AMBER
+      PARM_FILE_NAME hpla2_ee.prmtop
+      EI_SCALE14     0.8333
+      VDW_SCALE14    0.5000
+      &SPLINE
+        EMAX_SPLINE        1.0E8
+        RCUT_NB [angstrom] 10
+      &END SPLINE
+    &END FORCEFIELD
+
+    &POISSON
+      POISSON_SOLVER PERIODIC
+      PERIODIC       XYZ
+      &EWALD
+        EWALD_TYPE SPME
+        ALPHA      .35
+        GMAX       93 88 103
+      &END EWALD
+    &END POISSON
+  &END MM
+
+  #-----------------------------------------------------------------------------
+  # QM/MM coupling
+  #-----------------------------------------------------------------------------
+  &QMMM
+    ECOUPL       GAUSS
+    USE_GEEP_LIB 6
+    @INCLUDE forceeval_qmmm.cp2k.inc
+  &END QMMM
+
+  #-----------------------------------------------------------------------------
+  # SUBSYS - cell, topology, atomic kinds, collective variable
+  #-----------------------------------------------------------------------------
+  &SUBSYS
+
+    &CELL
+      ABC [angstrom]   9.3210001945495605E+01  8.8409994125366225E+01  1.0329999667406082E+02
+      ALPHA_BETA_GAMMA 90.0 90.0 90.0
+      PERIODIC         XYZ
+      SYMMETRY         ORTHORHOMBIC
+    &END CELL
+
+    &TOPOLOGY
+      COORD_FILE_FORMAT XYZ
+      COORD_FILE_NAME   REPLICA_1.xyz
+      CONN_FILE_FORMAT  AMBER
+      CONN_FILE_NAME    hpla2_ee.prmtop
+    &END TOPOLOGY
+
+    #-- QM kinds: basis set and pseudopotential --------------------------------
+    &KIND H
+      BASIS_SET DZV-GTH-PBE
+      POTENTIAL GTH-PBE-q1
+    &END KIND
+    &KIND C
+      BASIS_SET DZVP-GTH-PBE
+      POTENTIAL GTH-PBE-q4
+    &END KIND
+    &KIND N
+      BASIS_SET DZVP-GTH-PBE
+      POTENTIAL GTH-PBE-q5
+    &END KIND
+    &KIND O
+      BASIS_SET DZVP-GTH-PBE
+      POTENTIAL GTH-PBE-q6
+    &END KIND
+    &KIND P
+      BASIS_SET DZVP-GTH-PBE
+      POTENTIAL GTH-PBE-q5
+    &END KIND
+    &KIND S
+      BASIS_SET DZVP-GTH-PBE
+      POTENTIAL GTH-PBE-q6
+    &END KIND
+    &KIND Ca
+      BASIS_SET DZVP-GTH-PBE
+      POTENTIAL GTH-PBE-q10
+    &END KIND
+
+    #-- MM kinds: element mapping for non-standard AMBER atom types ------------
+    &KIND Na+
+      ELEMENT Na
+    &END KIND
+    &KIND CL-
+      ELEMENT Cl
+    &END KIND
+    &KIND Ca2
+      ELEMENT Ca
+    &END KIND
+    &KIND OO
+      ELEMENT O
+    &END KIND
+    &KIND HX1
+      ELEMENT H
+    &END KIND
+    &KIND HX2
+      ELEMENT H
+    &END KIND
+    &KIND HX3
+      ELEMENT H
+    &END KIND
+
+    #-- Reaction coordinate: COLVAR 1 ------------------------------------------
+    &COLVAR
+      &COMBINE_COLVAR
+        FUNCTION  CV1+CV2
+        VARIABLES CV1 CV2
+        &COLVAR
+          &DISTANCE_FUNCTION
+            ATOMS       1982 48030 38796 48032
+            COEFFICIENT +1.0
+          &END DISTANCE_FUNCTION
+        &END COLVAR
+        &COLVAR
+          &DISTANCE
+            ATOMS 38797 1981
+          &END DISTANCE
+        &END COLVAR
+      &END COMBINE_COLVAR
+    &END COLVAR
+
+  &END SUBSYS
+&END FORCE_EVAL
+
+
+#===============================================================================
+# MOTION - CI-NEB band optimization
+#===============================================================================
+&MOTION
+
+  #-----------------------------------------------------------------------------
+  # BAND
+  #-----------------------------------------------------------------------------
+  &BAND
+    BAND_TYPE          CI-NEB
+    NUMBER_OF_REPLICA  16
+    NPROC_REP          64
+    K_SPRING           0.05
+    POT_TYPE           ME
+    USE_COLVARS        .TRUE.
+    ROTATE_FRAMES      F
+    ALIGN_FRAMES       F
+
+    &CI_NEB
+      NSTEPS_IT 5
+    &END CI_NEB
+
+    &OPTIMIZE_BAND
+      OPT_TYPE            DIIS
+      OPTIMIZE_END_POINTS F
+      &DIIS
+        MAX_STEPS 500
+      &END DIIS
+    &END OPTIMIZE_BAND
+
+    &CONVERGENCE_CONTROL
+      MAX_FORCE 0.03
+      RMS_FORCE 0.05
+      MAX_DR    0.01
+      RMS_DR    0.02
+    &END CONVERGENCE_CONTROL
+
+    &CONVERGENCE_INFO
+    &END CONVERGENCE_INFO
+
+    # &PROGRAM_RUN_INFO
+    #   INITIAL_CONFIGURATION_INFO
+    # &END PROGRAM_RUN_INFO
+
+    #-- Band images -----------------------------------------------------------
+    # Images 6, 11 and 13 are left out; CP2K fills the band up to
+    # NUMBER_OF_REPLICA by bisecting the widest gaps.
+    &REPLICA
+      COORD_FILE_NAME REPLICA_1.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_2.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_3.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_4.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_5.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_5.xyz
+    &END REPLICA
+    # &REPLICA
+    #   COORD_FILE_NAME REPLICA_6.xyz
+    # &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_7.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_8.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_9.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_10.xyz
+    &END REPLICA
+    # &REPLICA
+    #   COORD_FILE_NAME REPLICA_11.xyz
+    # &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_12.xyz
+    &END REPLICA
+    # &REPLICA
+    #   COORD_FILE_NAME REPLICA_13.xyz
+    # &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_14.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_15.xyz
+    &END REPLICA
+    &REPLICA
+      COORD_FILE_NAME REPLICA_16.xyz
+    &END REPLICA
+  &END BAND
+
+  #-----------------------------------------------------------------------------
+  # GEO_OPT
+  #-----------------------------------------------------------------------------
+  &GEO_OPT
+    OPTIMIZER LBFGS
+    MAX_ITER  5000
+    MAX_DR    1.8E-03
+    RMS_DR    1.2E-03
+    MAX_FORCE 4.5E-04
+    RMS_FORCE 3.0E-04
+  &END GEO_OPT
+
+  #-----------------------------------------------------------------------------
+  # CONSTRAINT
+  #-----------------------------------------------------------------------------
+  &CONSTRAINT
+    &COLLECTIVE
+      COLVAR         1
+      INTERMOLECULAR TRUE
+      &RESTRAINT
+        K [angstrom^-2*kcalmol] 25.0
+      &END RESTRAINT
+    &END COLLECTIVE
+
+    &FIXED_ATOMS
+      @INCLUDE fixed_atoms.inc
+    &END FIXED_ATOMS
+  &END CONSTRAINT
+
+  #-----------------------------------------------------------------------------
+  # PRINT
+  #-----------------------------------------------------------------------------
+  &PRINT
+    &TRAJECTORY
+      FORMAT   DCD
+      ADD_LAST NUMERIC
+      &EACH
+        GEO_OPT 10
+      &END EACH
+    &END TRAJECTORY
+    &RESTART
+      ADD_LAST NUMERIC
+    &END RESTART
+    &RESTART_HISTORY
+      ADD_LAST NUMERIC
+    &END RESTART_HISTORY
+  &END PRINT
+
+&END MOTION
